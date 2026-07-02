@@ -9,6 +9,11 @@ from main import scan_modbus_rtu
 import time
 import traceback
 from PyQt6.QtCore import QObject, pyqtSignal
+import os
+
+# Получаем путь к папке, где находится текущий скрипт
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+UI_FILE = os.path.join(BASE_DIR, 'Window.ui')
 
 
 def global_exception_handler(exc_type, exc_value, exc_tb):
@@ -105,7 +110,7 @@ class ModbusScanner(QObject):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        loadUi('Window.ui', self)
+        loadUi(UI_FILE, self)
 
         self.comboBox_COM.addItems(port.device for port in serial.tools.list_ports.comports())
         self.pushButton_updateCOM.clicked.connect(self.updateCOM)
